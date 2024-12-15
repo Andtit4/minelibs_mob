@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:minelibs2/utils/app.utils.dart';
 import 'package:http/http.dart' as http;
 
@@ -87,7 +88,7 @@ class _AccountScreenState extends State<AccountScreen> {
         child: Column(
           children: [
             Container(
-              height: screenHeight(context) * .35,
+              height: screenHeight(context) * .33,
               width: screenWidth(context),
               padding: EdgeInsets.all(screenHeight(context) * .04),
               decoration: BoxDecoration(
@@ -104,6 +105,8 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ),
               child: Column(
+                spacing: defaultVerticalSpacer(context),
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     height: defaultVerticalSpacer(context),
@@ -114,18 +117,17 @@ class _AccountScreenState extends State<AccountScreen> {
                       FluAvatar(
                         defaultAvatarType: FluAvatarTypes.memojis,
                       ),
-                      
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'John Doe',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
                           Text(
                             _location,
-                            style:
-                                TextStyle(color: Colors.white.withOpacity(.4)),
+                            style: GoogleFonts.roboto(
+                                color: Colors.white.withOpacity(.4)),
                           ),
                         ],
                       ),
@@ -133,10 +135,39 @@ class _AccountScreenState extends State<AccountScreen> {
                         width: screenWidth(context) * .09,
                       ),
                       FluButton(
-                        onPressed: (){},
-                        backgroundColor: Colors.transparent,
-                        child: FluIcon(FluIcons.edit, color: Colors.white,))
+                          onPressed: () {},
+                          backgroundColor: Colors.transparent,
+                          child: FluIcon(
+                            FluIcons.edit,
+                            color: Colors.white,
+                          ))
                     ],
+                  ),
+                  Tooltip(
+                    message: 'Upgrade plan',
+                    textStyle: GoogleFonts.roboto(color: Colors.black),
+                    
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(25))),
+                    child: FluButton(
+                        onPressed: () {},
+                        width: screenWidth(context) * .35,
+                        padding: EdgeInsets.all(10),
+                        backgroundColor: promoteColor,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Free Plan',
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                            FluIcon(
+                              FluIcons.link,
+                              color: Colors.white,
+                            )
+                          ],
+                        )),
                   )
                 ],
               ),
