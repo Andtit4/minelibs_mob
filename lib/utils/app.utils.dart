@@ -28,6 +28,7 @@ double screenWidth(BuildContext context) {
 double screenHeight(BuildContext context) {
   return MediaQuery.sizeOf(context).height;
 }
+
 /* 
 Future<Color> getDominantColor(String imageUrl) async {
   // Charger l'image depuis l'URL

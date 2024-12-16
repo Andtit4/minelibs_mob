@@ -6,7 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:minelibs2/models/bookModel.dart';
+import 'package:minelibs2/screens/read.dart';
 import 'package:minelibs2/utils/app.utils.dart';
+import 'package:minelibs2/utils/transition.utils.dart';
 import 'package:palette_generator/palette_generator.dart'; // Ajoutez cette ligne
 
 class DetailScreen extends StatefulWidget {
@@ -255,62 +257,15 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             ),
             FluButton(
-                onPressed: () {},
+                onPressed: () {
+                  PageTransition.fadeTransition(context, ReadBookScreen(pdfLink: widget.book.bookLink));
+                },
                 backgroundColor: promoteColor,
                 width: screenWidth(context),
                 child: Text(
                   'Lire',
                   style: TextStyle(color: Colors.white),
                 ))
-            /* Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: screenWidth(context) * .56,
-                  height: screenHeight(context) * .08,
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      color: inputColorBlack,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'QTY',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      Row(
-                        children: [
-                          FluButton(
-                            onPressed: (){},
-                            backgroundColor: Colors.transparent,
-                              child: Text(
-                            '-',
-                            style: TextStyle(color: Colors.grey),
-                          )),
-                          Text(
-                            '0',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          FluButton(
-                            onPressed: (){},
-                            backgroundColor: Colors.transparent,
-                              child: Text(
-                            '+',
-                            style: TextStyle(color: Colors.grey),
-                          )),
-                        ],
-                      )
-                    ],
-                  ),
-                )
-              ,FluButton(
-                onPressed: (){},
-                backgroundColor: promoteColor,
-                width: screenWidth(context) * .3,
-                child: Text('Add to card', style: TextStyle(color: Colors.white),))
-              ],
-            ) */
           ],
         ),
       ),

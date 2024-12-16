@@ -146,7 +146,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
               SizedBox(
                 height: defaultVerticalSpacer(context),
               ),
-              Container(
+              /* Container(
                 width: screenWidth(context),
                 height: screenHeight(context) * .14,
                 padding: const EdgeInsets.all(24),
@@ -232,13 +232,13 @@ class _ReadingScreenState extends State<ReadingScreen> {
                     ),
                   ],
                 ),
-              ),
+              ), */
               SizedBox(
                 height: defaultVerticalSpacer(context),
               ),
               SizedBox(
                 width: screenWidth(context),
-                height: screenHeight(context) * .34,
+                height: screenHeight(context) * .48,
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Column(

@@ -8,13 +8,16 @@ class BookModel {
   String img;
   String description;
   Color color;
+  String bookLink;
 
   BookModel(
       {required this.author,
       required this.description,
       required this.img,
       required this.title,
-      required this.year, required this.color});
+      required this.year,
+      required this.color,
+      required this.bookLink});
   Future<Color> getDominantColor() async {
     // Charger l'image
     final imageProvider = NetworkImage(img);
@@ -31,9 +34,10 @@ class BookModel {
                 "Familiar bad boy–meets–good girl—but it's complicated—romance. A teen from a rough neighborhood is taken in by a wealthy family and falls for their daughter. Six months ago, 17-year-old Trice's abusive father shot him, killed his mother, and then committed suicide.",
             img:
                 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1560794474i/44674899.jpg',
-                color: Color(0xff2fbaa3),
+            color: Color(0xff2fbaa3),
             title: 'A love hate Thing',
-            year: '1979'),
+            year: '1979',
+            bookLink: 'https://core.ac.uk/download/pdf/225138024.pdf'),
         BookModel(
             author: 'Alan Trotter',
             description:
@@ -41,7 +45,9 @@ class BookModel {
             img: 'https://m.media-amazon.com/images/I/41OS-lQMS1L._SX195_.jpg',
             title: 'Muscle Travel',
             color: Color(0xfff08a41),
-            year: '1979'),
+            year: '1979',
+            bookLink:
+                'https://www.rbrhs.org/site/handlers/filedownload.ashx?moduleinstanceid=3696&dataid=5723&FileName=100-workouts-vol1.pdf'),
         BookModel(
             author: 'Michelle Victoria',
             description:
@@ -50,7 +56,9 @@ class BookModel {
                 'https://payload.cargocollective.com/1/8/266648/14213661/Lionel-1_2000_c.jpg',
             title: 'Fred The Lonely Monster',
             color: Color(0xffffda21),
-            year: '1979'),
+            year: '1979',
+            bookLink:
+                'https://cdn.oxfordowl.co.uk/2017/09/04/11/19/33/189/ort_ss_lonelymonster_tns.pdf'),
         BookModel(
             author: 'Mariama Bâ',
             description:
@@ -59,6 +67,7 @@ class BookModel {
                 'https://murya-by-retissia.com/wp-content/uploads/2019/05/l_une-si-longue-lettre-de-mariama-ba-1.jpg',
             title: 'Une si longue lettre',
             color: Color(0xffffffff),
-            year: '1979'),
+            year: '1979',
+            bookLink: 'https://excerpts.numilog.com/books/9782850493447.pdf'),
       ];
 }

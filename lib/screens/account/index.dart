@@ -146,7 +146,6 @@ class _AccountScreenState extends State<AccountScreen> {
                   Tooltip(
                     message: 'Upgrade plan',
                     textStyle: GoogleFonts.roboto(color: Colors.black),
-                    
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(25))),
@@ -172,6 +171,101 @@ class _AccountScreenState extends State<AccountScreen> {
                 ],
               ),
             ),
+            SizedBox(
+              width: screenWidth(context),
+              height: screenHeight(context) * .55,
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    spacing: defaultVerticalSpacer(context),
+                    children: [
+                      FluButton(
+                        onPressed: (){},
+                        backgroundColor: const Color.fromARGB(255, 10, 10, 10),
+                        height: screenHeight(context) * .1,
+                        padding: EdgeInsets.all(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Information Générale',
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                            FluIcon(FluIcons.arrowRight, color: Colors.white,)
+                          ],
+                        ),
+                      ),
+                      FluButton(
+                        onPressed: (){},
+                        backgroundColor: const Color.fromARGB(255, 10, 10, 10),
+                        height: screenHeight(context) * .1,
+                        padding: EdgeInsets.all(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Service Client',
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                            FluIcon(FluIcons.arrowRight, color: Colors.white,)
+                          ],
+                        ),
+                      ),
+                      FluButton(
+                        onPressed: (){},
+                        backgroundColor: const Color.fromARGB(255, 10, 10, 10),
+                        height: screenHeight(context) * .1,
+                        padding: EdgeInsets.all(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Comment ça marche',
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                            FluIcon(FluIcons.arrowRight, color: Colors.white,)
+                          ],
+                        ),
+                      ),
+                      FluButton(
+                        onPressed: (){},
+                        backgroundColor: const Color.fromARGB(255, 10, 10, 10),
+                        height: screenHeight(context) * .1,
+                        padding: EdgeInsets.all(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'FAQ',
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                            FluIcon(FluIcons.arrowRight, color: Colors.white,)
+                          ],
+                        ),
+                      ),
+                      FluButton(
+                        onPressed: (){},
+                        backgroundColor: const Color.fromARGB(255, 10, 10, 10),
+                        height: screenHeight(context) * .1,
+                        padding: EdgeInsets.all(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'A propos',
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                            FluIcon(FluIcons.arrowRight, color: Colors.white,)
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
