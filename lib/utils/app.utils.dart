@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image/image.dart' as img;
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 const appName = 'MineLibs';
 Color bgWhite = const Color.fromARGB(255, 250, 249, 249);
@@ -27,6 +28,12 @@ double screenWidth(BuildContext context) {
 
 double screenHeight(BuildContext context) {
   return MediaQuery.sizeOf(context).height;
+}
+
+splashShow() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool('isSplashShow', true);
+  print('change ${prefs.getBool('isSplashShow')}');
 }
 
 /* 

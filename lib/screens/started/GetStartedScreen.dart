@@ -83,27 +83,28 @@ class _GetStartedScreenState extends State<GetStartedScreen>
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  currentIndex == 0 ? SizedBox() :
-                  FluButton(
-                      backgroundColor: Colors.transparent,
-                      onPressed: () {
-                        if (currentIndex == 1) {
-                          // _controller.jumpToPage(0);
-                          _controller.previousPage(
-                              duration: Duration(seconds: 1),
-                              curve: Curves.easeInOut);
-                        } else if (currentIndex == 2) {
-                          // _controller.jumpToPage(1);
-                          _controller.previousPage(
-                              duration: Duration(seconds: 1),
-                              curve: Curves.easeInOut);
-                        } else {}
-                      },
-                      child: FluIcon(
-                        FluIcons.arrowLeft,
-                        style: FluIconStyles.broken,
-                        color: Colors.white,
-                      )),
+                  currentIndex == 0
+                      ? SizedBox()
+                      : FluButton(
+                          backgroundColor: Colors.transparent,
+                          onPressed: () {
+                            if (currentIndex == 1) {
+                              // _controller.jumpToPage(0);
+                              _controller.previousPage(
+                                  duration: Duration(seconds: 1),
+                                  curve: Curves.easeInOut);
+                            } else if (currentIndex == 2) {
+                              // _controller.jumpToPage(1);
+                              _controller.previousPage(
+                                  duration: Duration(seconds: 1),
+                                  curve: Curves.easeInOut);
+                            } else {}
+                          },
+                          child: FluIcon(
+                            FluIcons.arrowLeft,
+                            style: FluIconStyles.broken,
+                            color: Colors.white,
+                          )),
                   currentIndex == 2
                       ? AnimatedBuilder(
                           animation: _opacityAnimation,
@@ -113,14 +114,16 @@ class _GetStartedScreenState extends State<GetStartedScreen>
                               child: FluButton(
                                   backgroundColor: promoteColor,
                                   width: screenWidth(context) * .3,
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    await splashShow();
                                     PageTransition.fadeTransitionRemplacement(
                                         context, ChooseOptionScreen());
                                   },
                                   child: Text(
                                     'Get Started',
-                                    style:
-                                        Theme.of(context).textTheme.headlineMedium,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium,
                                   )),
                             );
                           }),
@@ -129,8 +132,10 @@ class _GetStartedScreenState extends State<GetStartedScreen>
                           backgroundColor: buttonColor,
                           onPressed: () {
                             _controller.nextPage(
-                                duration: Duration(milliseconds: 500), // Durée de l'animation
-                                curve: Curves.easeInOutCubic, // Courbe d'animation moderne
+                              duration: Duration(
+                                  milliseconds: 500), // Durée de l'animation
+                              curve: Curves
+                                  .easeInOutCubic, // Courbe d'animation moderne
                             );
                             if (currentIndex == 2) {
                               _animationController.forward();

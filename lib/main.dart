@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flukit/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +9,6 @@ import 'package:minelibs2/screens/HomeScreen.dart';
 import 'package:minelibs2/screens/auth/LoginScreen.dart';
 import 'package:minelibs2/screens/started/GetStartedScreen.dart';
 import 'package:minelibs2/utils/app.utils.dart';
-
 
 // Fix certificate verify issue
 class MyHttpOverrides extends HttpOverrides {
@@ -24,16 +25,35 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final bool isSplashShow = false;
+
+  getSplashShow() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    isSplashShow == prefs.getBool('isSplashShow')!;
+          print('state of $isSplashShow');
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getSplashShow();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Minelibs',
-      home: const GetStartedScreen(),
+      home: isSplashShow == false ? GetStartedScreen() : HomeScreen(),
       theme: ThemeData(
         textTheme: TextTheme(
             bodyLarge: GoogleFonts.roboto(
@@ -46,9 +66,10 @@ class MyApp extends StatelessWidget {
             displayMedium: GoogleFonts.roboto(
                 color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
             displaySmall: GoogleFonts.roboto(color: Colors.grey, fontSize: 14),
-            headlineMedium: GoogleFonts.roboto(color: Colors.white, fontSize: 14),
-            headlineSmall: GoogleFonts.roboto(color: promoteColor, fontSize: 14)
-            ),
+            headlineMedium:
+                GoogleFonts.roboto(color: Colors.white, fontSize: 14),
+            headlineSmall:
+                GoogleFonts.roboto(color: promoteColor, fontSize: 14)),
         scaffoldBackgroundColor: Colors.black,
       ),
     );
