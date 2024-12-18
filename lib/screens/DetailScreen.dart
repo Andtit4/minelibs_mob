@@ -25,7 +25,7 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   void initState() {
     super.initState();
-    _getDominantColor(); // Appelez la méthode pour obtenir la couleur dominante
+    _getDominantColor();
   }
 
   Future<void> _getDominantColor() async {
@@ -37,6 +37,17 @@ class _DetailScreenState extends State<DetailScreen> {
       dominantColor = paletteGenerator.dominantColor?.color ??
           Colors.transparent; // Mettez à jour la couleur dominante
     });
+  }
+
+  Future<void> _saveBook() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String>? bookList =
+        prefs.getStringList('book_list') ?? []; // Récupérez la liste existante
+    String bookInfo =
+        '${widget.book.title},${widget.book.author},${widget.book.img},${widget.book.bookLink}';
+    bookList.add(bookInfo);
+    await prefs.setStringList(
+        'book_list', bookList); // Enregistrez la liste mise à jour
   }
 
   @override
@@ -258,7 +269,9 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
             FluButton(
                 onPressed: () {
-                  PageTransition.fadeTransition(context, ReadBookScreen(pdfLink: widget.book.bookLink));
+                  _saveBook();
+                  PageTransition.fadeTransition(
+                      context, ReadBookScreen(pdfLink: widget.book.bookLink));
                 },
                 backgroundColor: promoteColor,
                 width: screenWidth(context),

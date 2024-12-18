@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:minelibs2/partials/bottom_nav.dart';
 import 'package:minelibs2/screens/HomeScreen.dart';
 import 'package:minelibs2/screens/auth/LoginScreen.dart';
 import 'package:minelibs2/screens/started/GetStartedScreen.dart';
@@ -31,15 +32,15 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
-
 class _MyAppState extends State<MyApp> {
-  final bool isSplashShow = false;
+  bool? isSplashShow;
 
   getSplashShow() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    isSplashShow == prefs.getBool('isSplashShow')!;
-          print('state of $isSplashShow');
-
+    setState(() {
+      isSplashShow = prefs.getBool('isSplashShow');
+    });
+    print('state of $isSplashShow');
   }
 
   @override
@@ -53,7 +54,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Minelibs',
-      home: isSplashShow == false ? GetStartedScreen() : HomeScreen(),
+      home: isSplashShow == null || false ? GetStartedScreen() : BottomNav(),
       theme: ThemeData(
         textTheme: TextTheme(
             bodyLarge: GoogleFonts.roboto(

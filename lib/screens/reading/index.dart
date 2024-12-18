@@ -16,6 +16,23 @@ class ReadingScreen extends StatefulWidget {
 
 class _ReadingScreenState extends State<ReadingScreen> {
   List<BookModel> books = BookModel.getAll();
+  List<String>? bookList;
+  late int? nbBookSaved = 0;
+
+  _getSavedBook() async {
+    final prefs = await SharedPreferences.getInstance();
+    bookList = await prefs.getStringList('book_list');
+    setState(() {
+      nbBookSaved = bookList?.length;
+    });
+    print('book saved $nbBookSaved');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getSavedBook();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -236,85 +253,95 @@ class _ReadingScreenState extends State<ReadingScreen> {
               SizedBox(
                 height: defaultVerticalSpacer(context),
               ),
-              SizedBox(
-                width: screenWidth(context),
-                height: screenHeight(context) * .48,
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Column(
-                    children: books.map((e)  {
-                      return Container(
-                        width: screenWidth(context),
-                        height: screenHeight(context) * .2,
-                        margin: EdgeInsets.only(bottom: 10),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient( // {{ edit_1 }} Ajout d'un gradient
-                              colors: [
-                                e.color.withOpacity(0.4), // Couleur plus foncée
-                                e.color.withOpacity(0), // Couleur d'origine
-                              ],
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                            ),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Row(
-                          children: [
-                            Container(
-                                clipBehavior: Clip.hardEdge,
-                                margin: EdgeInsets.only(right: 10),
-                                width: screenWidth(context) * .2,
-                                decoration: BoxDecoration(
-                                    color: Colors.transparent,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: FluImage(e.img)),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: screenWidth(context) * .4,
-                                  child: Text(
-                                    e.title,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
+              (nbBookSaved == 0 )
+                  ? Center(
+                      child: Text('Aucun livre en cours de lecture'),
+                    )
+                  : SizedBox(
+                      width: screenWidth(context),
+                      height: screenHeight(context) * .48,
+                      child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: Column(
+                          children: books.map((e) {
+                            return Container(
+                              width: screenWidth(context),
+                              height: screenHeight(context) * .2,
+                              margin: EdgeInsets.only(bottom: 10),
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    // {{ edit_1 }} Ajout d'un gradient
+                                    colors: [
+                                      e.color.withOpacity(
+                                          0.4), // Couleur plus foncée
+                                      e.color
+                                          .withOpacity(0), // Couleur d'origine
+                                    ],
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
                                   ),
-                                ),
-                                Text(
-                                  e.author,
-                                  style: TextStyle(
-                                      color: Colors.white.withOpacity(.5)),
-                                ),
-                                Row(
-                                  children: [
-                                    FluIcon(
-                                      FluIcons.star,
-                                      style: FluIconStyles.bulk,
-                                      color: Colors.orange,
-                                    ),
-                                    Text('4.5')
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: screenWidth(context) * .6,
-                                  height: 3,
-                                  child: LinearProgressIndicator(
-                                    backgroundColor:
-                                        Colors.white.withOpacity(.4),
-                                    color: Colors.white,
-                                    value: .7,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Row(
+                                children: [
+                                  Container(
+                                      clipBehavior: Clip.hardEdge,
+                                      margin: EdgeInsets.only(right: 10),
+                                      width: screenWidth(context) * .2,
+                                      decoration: BoxDecoration(
+                                          color: Colors.transparent,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: FluImage(e.img)),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: screenWidth(context) * .4,
+                                        child: Text(
+                                          e.title,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      Text(
+                                        e.author,
+                                        style: TextStyle(
+                                            color:
+                                                Colors.white.withOpacity(.5)),
+                                      ),
+                                      Row(
+                                        children: [
+                                          FluIcon(
+                                            FluIcons.star,
+                                            style: FluIconStyles.bulk,
+                                            color: Colors.orange,
+                                          ),
+                                          Text('4.5')
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: screenWidth(context) * .6,
+                                        height: 3,
+                                        child: LinearProgressIndicator(
+                                          backgroundColor:
+                                              Colors.white.withOpacity(.4),
+                                          color: Colors.white,
+                                          value: .7,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            );
+                          }).toList(),
                         ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              )
+                      ),
+                    )
             ],
           ),
         ),
