@@ -24,7 +24,7 @@ class BookDatabase {
       version: 1,
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE books(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, author TEXT, year TEXT, img TEXT, description TEXT, bookLink TEXT)',
+          'CREATE TABLE books(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, author TEXT, year TEXT, img TEXT, description TEXT, bookLink TEXT, pageNumber INTEGER, pageRead INTEGER)',
         );
       },
     );
@@ -54,6 +54,16 @@ class BookDatabase {
       book.toMap(),
       where: 'id = ?',
       whereArgs: [book.id],
+    );
+  }
+
+  Future<void> updatePageRead(int id, int pageRead) async {
+    final db = await database;
+    await db.update(
+      'books',
+      {'pageRead': pageRead},
+      where: 'id = ?',
+      whereArgs: [id],
     );
   }
 

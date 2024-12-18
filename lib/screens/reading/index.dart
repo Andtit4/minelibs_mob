@@ -346,7 +346,8 @@ class _ReadingScreenState extends State<ReadingScreen> {
                                         backgroundColor:
                                             Colors.white.withOpacity(.4),
                                         color: Colors.white,
-                                        value: .7,
+                                        value: books[index].pageRead /
+                                            books[index].pageNumber,
                                       ),
                                     ),
                                   ],

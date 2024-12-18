@@ -1,13 +1,15 @@
 import 'dart:io';
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
+import 'package:minelibs2/models/bookModel.dart';
+import 'package:minelibs2/screens/services/savedBook.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 class ReadBookScreen extends StatefulWidget {
-  final String pdfLink;
-  const ReadBookScreen({super.key, required this.pdfLink});
+  final BookModel book;
+  const ReadBookScreen({super.key, required this.book});
 
   @override
   State<ReadBookScreen> createState() => _ReadBookScreenState();
@@ -19,7 +21,7 @@ class _ReadBookScreenState extends State<ReadBookScreen> {
   @override
   void initState() {
     super.initState();
-    _downloadFile(widget.pdfLink);
+    _downloadFile(widget.book.bookLink);
   }
 
   Future<void> _downloadFile(String url) async {
@@ -40,6 +42,10 @@ class _ReadBookScreenState extends State<ReadBookScreen> {
       body: localPath == null
           ? Center(child: FluLoader())
           : PdfView(
+              onPageChanged: (int page) async {
+                print('page $page');
+                await BookDatabase().updatePageRead(widget.book.id, page);
+              },
               controller: PdfController(
                 document: PdfDocument.openFile(localPath!),
               ),

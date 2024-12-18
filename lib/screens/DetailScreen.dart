@@ -70,7 +70,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       double.infinity, // Modifié pour occuper toute la largeur
                   height: screenHeight(context) * .4,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    /* gradient: LinearGradient(
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
                       colors: [
@@ -79,7 +79,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         // widget.book.color
                         //     .withOpacity(0.3), // Couleur moins foncée en haut
                       ],
-                    ),
+                    ), */
                     // borderRadius: BorderRadius.circular(30),
                   ),
                 ),
@@ -213,7 +213,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     height: screenHeight(context) * .1,
                     color: Colors.grey,
                   ),
-                  const Column(
+                   Column(
                     children: [
                       Text(
                         'Number of Pages',
@@ -223,7 +223,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        '121',
+                        '${widget.book.pageNumber}',
                         style: TextStyle(
                             fontSize: 10,
                             color: Colors.grey,
@@ -279,7 +279,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   }
 
                   PageTransition.fadeTransition(
-                      context, ReadBookScreen(pdfLink: widget.book.bookLink));
+                      context, ReadBookScreen(book: widget.book));
                 },
                 backgroundColor: promoteColor,
                 width: screenWidth(context),

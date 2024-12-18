@@ -10,6 +10,8 @@ class BookModel {
   String description;
   // Color color;
   String bookLink;
+  int pageNumber;
+  int pageRead;
 
   BookModel(
       {required this.id,
@@ -19,7 +21,9 @@ class BookModel {
       required this.title,
       required this.year,
       // required this.color,
-      required this.bookLink});
+      required this.bookLink,
+      required this.pageNumber,
+      required this.pageRead});
   Future<Color> getDominantColor() async {
     // Charger l'image
     final imageProvider = NetworkImage(img);
@@ -40,7 +44,9 @@ class BookModel {
             // color: Color(0xff2fbaa3),
             title: 'A love hate Thing',
             year: '1979',
-            bookLink: 'https://core.ac.uk/download/pdf/225138024.pdf'),
+            bookLink: 'https://core.ac.uk/download/pdf/225138024.pdf',
+            pageNumber: 121,
+            pageRead: 0),
         BookModel(
             id: 2,
             author: 'Alan Trotter',
@@ -51,7 +57,9 @@ class BookModel {
             // color: Color(0xfff08a41),
             year: '1979',
             bookLink:
-                'https://www.rbrhs.org/site/handlers/filedownload.ashx?moduleinstanceid=3696&dataid=5723&FileName=100-workouts-vol1.pdf'),
+                'https://www.rbrhs.org/site/handlers/filedownload.ashx?moduleinstanceid=3696&dataid=5723&FileName=100-workouts-vol1.pdf',
+            pageNumber: 20,
+            pageRead: 0),
         BookModel(
             id: 3,
             author: 'Michelle Victoria',
@@ -63,7 +71,9 @@ class BookModel {
             // color: Color(0xffffda21),
             year: '1979',
             bookLink:
-                'https://cdn.oxfordowl.co.uk/2017/09/04/11/19/33/189/ort_ss_lonelymonster_tns.pdf'),
+                'https://cdn.oxfordowl.co.uk/2017/09/04/11/19/33/189/ort_ss_lonelymonster_tns.pdf',
+            pageNumber: 50,
+            pageRead: 0),
         BookModel(
             id: 4,
             author: 'Mariama Bâ',
@@ -74,7 +84,9 @@ class BookModel {
             title: 'Une si longue lettre',
             // color: Color(0xffffffff),
             year: '1979',
-            bookLink: 'https://excerpts.numilog.com/books/9782850493447.pdf'),
+            bookLink: 'https://excerpts.numilog.com/books/9782850493447.pdf',
+            pageNumber: 50,
+            pageRead: 0),
       ];
 
   static fromJson(String e) {}
@@ -88,19 +100,23 @@ class BookModel {
       'img': img,
       'description': description,
       // 'color': color,
-      'bookLink': bookLink
+      'bookLink': bookLink,
+      'pageNumber': pageNumber,
+      'pageRead': pageRead
     };
   }
 
   factory BookModel.fromMap(Map<String, dynamic> map) {
     return BookModel(
-      id: map['id'],
+        id: map['id'],
         author: map['author'],
         description: map['description'],
         img: map['img'],
         title: map['title'],
         year: map['year'],
         // color: map['color'],
-        bookLink: map['bookLink']);
+        bookLink: map['bookLink'],
+        pageNumber: map['pageNumber'],
+        pageRead: map['pageRead']);
   }
 }
