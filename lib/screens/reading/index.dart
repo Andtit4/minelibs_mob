@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minelibs2/models/bookModel.dart';
 import 'package:minelibs2/screens/DetailScreen.dart';
+import 'package:minelibs2/screens/services/savedBook.dart';
 import 'package:minelibs2/utils/app.utils.dart';
 import 'package:minelibs2/utils/transition.utils.dart';
 
@@ -15,23 +16,40 @@ class ReadingScreen extends StatefulWidget {
 }
 
 class _ReadingScreenState extends State<ReadingScreen> {
-  List<BookModel> books = BookModel.getAll();
+  List<BookModel> books = [];
   List<String>? bookList;
   late int? nbBookSaved = 0;
 
-  _getSavedBook() async {
+  /* _getSavedBook() async {
     final prefs = await SharedPreferences.getInstance();
-    bookList = await prefs.getStringList('book_list');
+
+    List<String>? bookList = await prefs.getStringList('book_list');
     setState(() {
       nbBookSaved = bookList?.length;
     });
-    print('book saved $nbBookSaved');
-  }
+    if (bookList != null) {
+      print('book saved $nbBookSaved, books: ${bookList[1]}');
+    }
+  } */
 
   @override
   void initState() {
     super.initState();
-    _getSavedBook();
+    _getTotalBooksCount();
+    _loadBooks();
+  }
+
+  _getTotalBooksCount() async {
+    final count = await BookDatabase().getTotalBooksCount();
+    setState(() {
+      nbBookSaved = count;
+    });
+    print('books $nbBookSaved');
+  }
+
+  Future<void> _loadBooks() async {
+    books = await BookDatabase().getBooks();
+    setState(() {});
   }
 
   @override
@@ -253,17 +271,93 @@ class _ReadingScreenState extends State<ReadingScreen> {
               SizedBox(
                 height: defaultVerticalSpacer(context),
               ),
-              (nbBookSaved == 0 )
+              (nbBookSaved == 0)
                   ? Center(
                       child: Text('Aucun livre en cours de lecture'),
                     )
                   : SizedBox(
                       width: screenWidth(context),
                       height: screenHeight(context) * .48,
-                      child: SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
-                        child: Column(
-                          children: books.map((e) {
+                      child: ListView.builder(
+                        itemCount: books.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            width: screenWidth(context),
+                            height: screenHeight(context) * .2,
+                            margin: EdgeInsets.only(bottom: 10),
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 20, 20, 20),
+                                // gradient: LinearGradient(
+                                //   // {{ edit_1 }} Ajout d'un gradient
+                                //   colors: [
+                                //     // e.color.withOpacity(
+                                //     //     0.4), // Couleur plus foncée
+                                //     // e.color
+                                //     //     .withOpacity(0), // Couleur d'origine
+                                //   ],
+                                //   begin: Alignment.bottomCenter,
+                                //   end: Alignment.topCenter,
+                                // ),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Row(
+                              children: [
+                                Container(
+                                    clipBehavior: Clip.hardEdge,
+                                    margin: EdgeInsets.only(right: 10),
+                                    width: screenWidth(context) * .2,
+                                    decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: FluImage(books[index].img)),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: screenWidth(context) * .4,
+                                      child: Text(
+                                        books[index].title,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Text(
+                                      books[index].author,
+                                      style: TextStyle(
+                                          color: Colors.white.withOpacity(.5)),
+                                    ),
+                                    Row(
+                                      children: [
+                                        FluIcon(
+                                          FluIcons.star,
+                                          style: FluIconStyles.bulk,
+                                          color: Colors.orange,
+                                        ),
+                                        Text('4.5')
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      width: screenWidth(context) * .6,
+                                      height: 3,
+                                      child: LinearProgressIndicator(
+                                        backgroundColor:
+                                            Colors.white.withOpacity(.4),
+                                        color: Colors.white,
+                                        value: .7,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      )
+
+                      /*  children: bookList?.map((e) {
                             return Container(
                               width: screenWidth(context),
                               height: screenHeight(context) * .2,
@@ -338,10 +432,9 @@ class _ReadingScreenState extends State<ReadingScreen> {
                                 ],
                               ),
                             );
-                          }).toList(),
-                        ),
+                          }).toList(), */
+
                       ),
-                    )
             ],
           ),
         ),

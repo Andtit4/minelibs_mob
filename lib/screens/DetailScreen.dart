@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:minelibs2/models/bookModel.dart';
 import 'package:minelibs2/screens/read.dart';
+import 'package:minelibs2/screens/services/savedBook.dart';
 import 'package:minelibs2/utils/app.utils.dart';
 import 'package:minelibs2/utils/transition.utils.dart';
 import 'package:palette_generator/palette_generator.dart'; // Ajoutez cette ligne
@@ -21,6 +22,7 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   Color dominantColor = Colors.transparent; // Ajoutez cette variable
+  // late int idForQuery = 0;
 
   @override
   void initState() {
@@ -72,10 +74,10 @@ class _DetailScreenState extends State<DetailScreen> {
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
                       colors: [
-                        widget.book.color
-                            .withOpacity(0.8), // Couleur foncée en bas
-                        widget.book.color
-                            .withOpacity(0.3), // Couleur moins foncée en haut
+                        // widget.book.color
+                        //     .withOpacity(0.8), // Couleur foncée en bas
+                        // widget.book.color
+                        //     .withOpacity(0.3), // Couleur moins foncée en haut
                       ],
                     ),
                     // borderRadius: BorderRadius.circular(30),
@@ -268,8 +270,14 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             ),
             FluButton(
-                onPressed: () {
-                  _saveBook();
+                onPressed: () async {
+                  int idCount =
+                      await BookDatabase().countBooksById(widget.book.id);
+
+                  if (idCount == 0) {
+                    await BookDatabase().insertBook(widget.book);
+                  }
+
                   PageTransition.fadeTransition(
                       context, ReadBookScreen(pdfLink: widget.book.bookLink));
                 },
