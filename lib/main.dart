@@ -1,61 +1,26 @@
-import 'dart:io';
-
-import 'package:flukit/services.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:minelibs2/partials/bottom_nav.dart';
-import 'package:minelibs2/screens/HomeScreen.dart';
-import 'package:minelibs2/screens/auth/LoginScreen.dart';
-import 'package:minelibs2/screens/started/GetStartedScreen.dart';
-import 'package:minelibs2/utils/app.utils.dart';
+import 'package:minelibs2/core/bindings/initial_bindings.dart';
+import 'package:minelibs2/core/theme/app_theme.dart';
+import 'package:minelibs2/core/theme/colors.dart';
+import 'package:minelibs2/routes/app_routes.dart';
 
-// Fix certificate verify issue
-class MyHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-  }
-}
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final pages = await AppPages.getPages();
 
-void main() {
-  HttpOverrides.global = MyHttpOverrides();
-  runApp(const MyApp());
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-class _MyAppState extends State<MyApp> {
-  bool? isSplashShow;
-
-  getSplashShow() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      isSplashShow = prefs.getBool('isSplashShow');
-    });
-    print('state of $isSplashShow');
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getSplashShow();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
+  runApp(
+    GetMaterialApp(
       title: 'Minelibs',
-      home: isSplashShow == null || false ? GetStartedScreen() : BottomNav(),
+      debugShowCheckedModeBanner: false,
+      getPages: pages,
+      initialRoute: AppPages.INITIAL,
+      // darkTheme: AppTheme.darkTheme,
+      initialBinding: InitialBindings(),
       theme: ThemeData(
+        primaryColor: AppColors.promoteColor,
+        scaffoldBackgroundColor: Colors.black,
         textTheme: TextTheme(
             bodyLarge: GoogleFonts.roboto(
                 color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
@@ -69,10 +34,9 @@ class _MyAppState extends State<MyApp> {
             displaySmall: GoogleFonts.roboto(color: Colors.grey, fontSize: 14),
             headlineMedium:
                 GoogleFonts.roboto(color: Colors.white, fontSize: 14),
-            headlineSmall:
-                GoogleFonts.roboto(color: promoteColor, fontSize: 14)),
-        scaffoldBackgroundColor: Colors.black,
+            headlineSmall: GoogleFonts.roboto(
+                color: AppColors.promoteColor, fontSize: 14)),
       ),
-    );
-  }
+    ),
+  );
 }
