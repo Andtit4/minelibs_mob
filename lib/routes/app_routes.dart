@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:minelibs2/di/home_binding.dart';
 import 'package:minelibs2/di/navigation_binding.dart';
+import 'package:minelibs2/old/screens/HomeScreen.dart';
 import 'package:minelibs2/presentation/screens/navigation/navigation_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../presentation/screens/auth/choose_auth_option_screen.dart';
@@ -31,7 +33,13 @@ class AppPages {
         page: () => const NavigationScreen(),
         binding: NavigationBinding(),
         transition: Transition.fade,
-      )
+      ),
+      GetPage(
+        name: Routes.HOME,
+        page: () => const HomeScreen(),
+        binding: HomeBinding(prefs),
+        transition: Transition.fade,
+      ),
     ];
   }
 }
@@ -40,4 +48,6 @@ class Routes {
   static const CHOOSE_AUTH = '/auth/choose-option';
   static const ONBOARDING = '/onboarding';
   static const BOTTOMNAV = '/bottomNav';
+  static const HOME = '/home';
+
 }

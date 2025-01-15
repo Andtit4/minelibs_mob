@@ -12,6 +12,8 @@ void main() async {
 
   runApp(
     GetMaterialApp(
+      // locale: DevicePreview.locale(context),
+
       title: 'Minelibs',
       debugShowCheckedModeBanner: false,
       getPages: pages,

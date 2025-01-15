@@ -1,8 +1,8 @@
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:minelibs2/old/screens/HomeScreen.dart';
 import 'package:minelibs2/presentation/controllers/navigation_controller.dart';
+import 'package:minelibs2/presentation/screens/home/home_screen.dart';
 
 class NavigationScreen extends StatelessWidget {
   const NavigationScreen({super.key});
@@ -21,7 +21,23 @@ class NavigationScreen extends StatelessWidget {
           AccountScreen(), */
             ],
           )),
-      bottomNavigationBar: Obx(() => BottomNavigationBar(
+      bottomNavigationBar: FluBottomNavBar(
+              onItemTap: (int p0) {
+                controller.changePage(p0);
+              },
+              style: FluBottomNavBarStyle(
+                iconStyle: FluIconStyles.bulk,
+                type: FluBottomNavBarTypes.flat,
+                unSelectedForegroundColor: Colors.white,
+              ),
+              items: [
+                FluBottomNavBarItem(FluIcons.home, 'Home'),
+                FluBottomNavBarItem(FluIcons.book, 'Book'),
+                FluBottomNavBarItem(FluIcons.bookmark, 'Livraison'),
+                FluBottomNavBarItem(FluIcons.user, 'compte'),
+              ])
+      
+      /* Obx(() => BottomNavigationBar(
             currentIndex: controller.currentIndex.value,
             onTap: controller.changePage,
             backgroundColor: Colors.transparent,
@@ -36,7 +52,7 @@ class NavigationScreen extends StatelessWidget {
               BottomNavigationBarItem(
                   icon: Icon(Icons.person), label: 'Compte'),
             ],
-          )),
+          )), */
       /* bottomNavigationBar: Obx(() => FluBottomNavBar(
               onItemTap: (int p0) {
                 controller.changePage(p0);
