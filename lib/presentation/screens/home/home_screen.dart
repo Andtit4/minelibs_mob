@@ -10,6 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:minelibs2/core/theme/colors.dart';
 import 'package:minelibs2/domain/entities/book_info.dart';
 import 'package:minelibs2/presentation/controllers/home_controller.dart';
+import 'package:minelibs2/presentation/screens/read/read_screen.dart';
+import 'package:minelibs2/routes/app_routes.dart';
 import 'package:onyxsio_grid_view/onyxsio_grid_view.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -41,6 +43,7 @@ class HomeScreen extends GetView<HomeController> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'John Doe',
@@ -52,8 +55,8 @@ class HomeScreen extends GetView<HomeController> {
                             Text(
                               controller.greeting.value,
                               style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontSize: 12,
+                                color: const Color.fromARGB(169, 255, 255, 255),
+                                fontSize: 12,
                               ),
                             )
                           ],
@@ -288,6 +291,7 @@ class HomeScreen extends GetView<HomeController> {
                               onTap: () {
                                 /* PageTransition.fadeTransition(context,
                                             DetailScreen(book: books[index])); */
+                                Get.to(ReadScreen(book: controller.books[index]), transition: Transition.fade);
                               },
                               child: Hero(
                                 tag: controller.books[index].img,

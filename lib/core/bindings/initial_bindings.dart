@@ -10,6 +10,7 @@ import 'package:minelibs2/presentation/controllers/auth_controller.dart';
 import 'package:minelibs2/presentation/controllers/home_controller.dart';
 import 'package:minelibs2/presentation/controllers/navigation_controller.dart';
 import 'package:minelibs2/presentation/controllers/onboarding_controller.dart';
+import 'package:minelibs2/presentation/controllers/read_controller.dart';
 
 class InitialBindings extends Bindings {
   @override
@@ -27,6 +28,7 @@ class InitialBindings extends Bindings {
     Get.put(NavigationService());
     Get.put(AuthController());
     Get.put(NavigationController());
+    Get.put(ReadController());
     // Repositories
     Get.lazyPut<OnboardingRepository>(
       () => OnboardingRepositoryImpl(Get.find<SharedPreferences>()),

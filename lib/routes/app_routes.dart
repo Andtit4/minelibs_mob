@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
 import 'package:minelibs2/di/home_binding.dart';
 import 'package:minelibs2/di/navigation_binding.dart';
+import 'package:minelibs2/di/read_binding.dart';
+import 'package:minelibs2/domain/entities/book_info.dart';
+import 'package:minelibs2/old/models/bookModel.dart';
 import 'package:minelibs2/old/screens/HomeScreen.dart';
 import 'package:minelibs2/presentation/screens/navigation/navigation_screen.dart';
+import 'package:minelibs2/presentation/screens/read/read_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../presentation/screens/auth/choose_auth_option_screen.dart';
 import '../presentation/screens/onboarding/get_started_screen.dart';
@@ -14,6 +18,7 @@ class AppPages {
 
   static Future<List<GetPage>> getPages() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // final BookInfo book = BookInfo();
 
     return [
       GetPage(
@@ -40,6 +45,14 @@ class AppPages {
         binding: HomeBinding(prefs),
         transition: Transition.fade,
       ),
+      /* GetPage(
+        name: Routes.DETAILSCREEN,
+        page: () => ReadScreen(
+          book: book,
+        ),
+        binding: ReadBinding(),
+        transition: Transition.fade,
+      ), */
     ];
   }
 }
@@ -49,5 +62,5 @@ class Routes {
   static const ONBOARDING = '/onboarding';
   static const BOTTOMNAV = '/bottomNav';
   static const HOME = '/home';
-
+  static const DETAILSCREEN = '/details';
 }
